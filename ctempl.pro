@@ -15,7 +15,7 @@ TEMPLATE = app
 # any feature of Qt which has been marked as deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
 # deprecated API in order to know how to port your code away from it.
-DEFINES += QT_DEPRECATED_WARNINGS QT_STRING_BUILDER
+DEFINES += QT_DEPRECATED_WARNINGS QT_USE_QSTRINGBUILDER QT_RESTRICTED_CAST_FROM_ASCII
 
 # You can also make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -36,5 +36,5 @@ FORMS += \
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../ctemplate-ctemplate-2.3/x64/Release/ -llibctemplate
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../ctemplate-ctemplate-2.3/x64/Debug/ -llibctemplate-debug
 
-INCLUDEPATH += $$PWD/../ctemplate-ctemplate-2.3/src/windows/ctemplate
-DEPENDPATH += $$PWD/../ctemplate-ctemplate-2.3/src/windows/ctemplate
+INCLUDEPATH += $$PWD/../ctemplate-ctemplate-2.3/src/windows
+DEPENDPATH += $$PWD/../ctemplate-ctemplate-2.3/src/windows

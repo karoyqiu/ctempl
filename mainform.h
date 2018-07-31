@@ -29,10 +29,17 @@ public:
 
 protected:
     virtual void changeEvent(QEvent *e) override;
+    virtual void closeEvent(QCloseEvent *e) override;
+
+private slots:
+    void generate();
 
 private:
+    void loadSettings();
+    void saveSettings() const;
     void loadTemplates();
 
 private:
     Ui::MainForm *ui;
+    QString templateDir_;
 };
