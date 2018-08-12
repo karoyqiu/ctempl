@@ -1,0 +1,5 @@
+<ui version="4.0">
+ <class>{{CLASS}}</class>
+ <widget class="QWidget" name="{{CLASS}}" >
+ </widget>
+</ui>
