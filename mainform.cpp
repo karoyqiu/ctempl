@@ -13,12 +13,14 @@
 #include "mainform.h"
 #include "ui_mainform.h"
 
+#include <QClipboard>
 #include <QDate>
 #include <QDebug>
 #include <QDir>
 #include <QFile>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QSaveFile>
 #include <QSettings>
 #include <QStandardPaths>
 #include <QTextStream>
@@ -39,15 +41,16 @@ static bool generateFile(const ctemplate::TemplateDictionary &dict, const QStrin
         return false;
     }
 
-    QFile file(targetFilename);
+    QSaveFile file(targetFilename);
 
     if (!file.open(QFile::WriteOnly | QFile::Truncate))
     {
+        qCritical() << file.errorString();
         return false;
     }
 
     file.write(output.c_str(), output.length());
-    return true;
+    return file.commit();
 }
 
 
@@ -128,6 +131,7 @@ void MainForm::generate()
             filename = filename.toLower();
         }
 
+        qApp->clipboard()->setText(filename);
         dict.SetValue("FILENAME", filename.toStdString());
         filename = dir % "/" % filename % "." % s.completeSuffix();
         generateFile(dict, s.absoluteFilePath(), filename);
