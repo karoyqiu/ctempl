@@ -11,13 +11,14 @@
  *
  **************************************************************************************************/
 #pragma once
-#include <QObject>
+#include <{{BASECLASS}}>
+#include "{{BASECLASS}}"
 
 
-class {{CLASS}} : public QObject
+class {{CLASS}} : public {{BASECLASS}}
 {
     Q_OBJECT
 
 public:
-    explicit {{CLASS}}(QObject *parent = nullptr);
+    explicit {{CLASS}}({{BASECLASS}} *parent = nullptr);
 };

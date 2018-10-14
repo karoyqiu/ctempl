@@ -13,7 +13,7 @@
 #include "{{FILENAME}}.h"
 
 
-{{CLASS}}::{{CLASS}}(QObject *parent /*= nullptr*/)
-    : QObject(parent)
+{{CLASS}}::{{CLASS}}({{BASECLASS}} *parent /*= nullptr*/)
+    : {{BASECLASS}}(parent)
 {
 }

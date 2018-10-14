@@ -109,6 +109,7 @@ void MainForm::generate()
 
     ctemplate::TemplateDictionary dict("dict");
     dict.SetValue("CLASS", ui->editClass->text().toStdString());
+    dict.SetValue("BASECLASS", ui->editBaseClass->text().toStdString());
     dict.SetValue("VERSION", ui->editVersion->text().toStdString());
     dict.SetValue("DATE", QDate::currentDate().toString(Qt::ISODate).toStdString());
     dict.SetValue("AUTHOR", ui->editAuthor->text().toStdString());
