@@ -1,6 +1,6 @@
 ﻿/*! ***********************************************************************************************
  *
- * \file        {{FILENAME}}.cpp
+ * \file        {{CLASS:x-to_lower}}.cpp
  * \brief       {{CLASS}} 类源文件。
  *
  * \version     {{VERSION}}
@@ -10,10 +10,11 @@
  * \copyright   {{COPYRIGHT}}
  *
  **************************************************************************************************/
-#include "{{FILENAME}}.h"
+#include "{{CLASS:x-to_lower}}.h"
 
-
-{{CLASS}}::{{CLASS}}({{BASECLASS}} *parent /*= nullptr*/)
+{{#NAMESPACE}}{{BI_NEWLINE}}namespace {{NAMESPACE}} {{{BI_NEWLINE}}{{BI_NEWLINE}}{{/NAMESPACE}}
+{{CLASS}}::{{CLASS}}(QObject *parent /*= nullptr*/)
     : {{BASECLASS}}(parent)
 {
 }
+{{#NAMESPACE}}{{BI_NEWLINE}}{{BI_NEWLINE}}}       // namespace {{NAMESPACE}}{{/NAMESPACE}}

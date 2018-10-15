@@ -28,6 +28,22 @@
 #define QS(x)   QStringLiteral(x)
 
 
+class ToLowerModifier : public ctemplate::TemplateModifier
+{
+public:
+    virtual void Modify(const char* in, size_t inlen,
+                        const ctemplate::PerExpandData* per_expand_data,
+                        ctemplate::ExpandEmitter* outbuf, const std::string &arg) const override
+    {
+        Q_UNUSED(per_expand_data);
+        Q_UNUSED(arg);
+
+        auto s = QString::fromUtf8(in, static_cast<int>(inlen));
+        outbuf->Emit(s.toLower().toStdString());
+    }
+};
+
+
 static bool generateFile(const ctemplate::TemplateDictionary &dict, const QString &templateFilename,
                          const QString &targetFilename)
 {
@@ -63,6 +79,8 @@ MainForm::MainForm(QWidget *parent)
     loadTemplates();
 
     qDebug() << "Templates dir:" << templateDir_;
+
+    ctemplate::AddModifier("x-to_lower", new ToLowerModifier);
 }
 
 
@@ -107,6 +125,7 @@ void MainForm::generate()
 
     settings.setValue(QS("dir"), dir);
 
+    ctemplate::mutable_default_template_cache()->ReloadAllIfChanged(ctemplate::TemplateCache::LAZY_RELOAD);
     ctemplate::TemplateDictionary dict("dict");
     dict.SetValue("CLASS", ui->editClass->text().toStdString());
     dict.SetValue("BASECLASS", ui->editBaseClass->text().toStdString());
@@ -115,6 +134,12 @@ void MainForm::generate()
     dict.SetValue("AUTHOR", ui->editAuthor->text().toStdString());
     dict.SetValue("EMAIL", ui->editEmail->text().toStdString());
     dict.SetValue("COPYRIGHT", ui->editCopyright->text().toStdString());
+
+    if (!ui->editNamespace->text().isEmpty())
+    {
+        auto *sub = dict.AddSectionDictionary("NAMESPACE");
+        sub->SetValue("NAMESPACE", ui->editNamespace->text().toStdString());
+    }
 
     QDir templateDir(templateDir_);
     templateDir.cd(ui->comboTemplate->currentText());
@@ -144,6 +169,9 @@ void MainForm::loadSettings()
     ui->editCopyright->setText(settings.value(QS("copyright")).toString());
     ui->editEmail->setText(settings.value(QS("email")).toString());
     ui->editVersion->setText(settings.value(QS("version")).toString());
+    ui->comboTemplate->setCurrentIndex(settings.value(QS("template")).toInt());
+    ui->editBaseClass->setText(settings.value(QS("base")).toString());
+    ui->editNamespace->setText(settings.value(QS("ns")).toString());
 }
 
 
@@ -154,6 +182,9 @@ void MainForm::saveSettings() const
     settings.setValue(QS("copyright"), ui->editCopyright->text());
     settings.setValue(QS("email"), ui->editEmail->text());
     settings.setValue(QS("version"), ui->editVersion->text());
+    settings.setValue(QS("template"), ui->comboTemplate->currentIndex());
+    settings.setValue(QS("base"), ui->editBaseClass->text());
+    settings.setValue(QS("ns"), ui->editNamespace->text());
 }
 
 
