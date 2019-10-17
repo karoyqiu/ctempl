@@ -33,6 +33,8 @@ HEADERS += \
 FORMS += \
         mainform.ui
 
+RC_ICONS = pencil.ico
+
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../ctemplate-ctemplate-2.3/x64/Release/ -llibctemplate
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../ctemplate-ctemplate-2.3/x64/Debug/ -llibctemplate-debug
 
